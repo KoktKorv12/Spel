@@ -20,6 +20,7 @@ public class Display {
         createDisplay();
     }
 
+    //Bygger framen med JFrame, gör så att man inte kan re-sizea fliken mm
     private void createDisplay(){
         frame = new JFrame(title);
         frame.setSize(width,height);
@@ -28,6 +29,7 @@ public class Display {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
+        //ritar spelets innehåll i Canvas
         canvas = new Canvas();
         canvas.setPreferredSize(new Dimension(width, height));
         canvas.setMaximumSize(new Dimension(width, height));

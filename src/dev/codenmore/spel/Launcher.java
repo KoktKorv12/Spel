@@ -1,11 +1,12 @@
 package dev.codenmore.spel;
 
-import dev.codenmore.display.Display;
+import dec.codenmore.spel.Game;
+
 
 public class Launcher {
 
     public static void main(String[] args) {
-        new Display("Speltitel", 800,800);
+        new Game("Speltitel", 800,800);
 
     }
 }

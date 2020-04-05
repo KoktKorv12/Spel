@@ -1,6 +1,12 @@
 package dec.codenmore.spel;
 
+import dec.codenmore.spel.input.KeyManager;
 import dev.codenmore.spel.Display;
+import dev.codenmore.spel.gfx.Assets;
+import dev.codenmore.spel.states.GameState;
+import dev.codenmore.spel.states.State;
+import dev.codenmore.spel.states.MenuState;
+
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -17,21 +23,38 @@ public class Game implements Runnable {
     private BufferStrategy bs;
     private Graphics g;
 
-    //sätter height på "Game"
+    //States
+    private State gameState;
+    private State menuState;
+
+    //Input
+    private KeyManager keyManager;
+
+    //Sets height to "Game"
     public Game(String title, int width, int height){
         this.width = width;
         this.height = height;
         this.title = title;
-
+        keyManager = new KeyManager();
     }
 
-    //Grafiker
+    //Graphics
     private void init(){
         display = new Display(title ,width, height);
+        display.getFrame().addKeyListener(keyManager);
+        Assets.init();
+
+        gameState = new GameState(this);
+        menuState = new MenuState(this);
+        State.setState(gameState);
     }
 
     private void tick(){
+        keyManager.tick();
 
+        if (State.getState() != null){
+            State.getState().tick();
+        }
     }
 
     private void render(){
@@ -41,12 +64,15 @@ public class Game implements Runnable {
             return;
         }
         g = bs.getDrawGraphics();
-        //Rita här
+        //Clear screen
+        g.clearRect(0, 0, width, height);
+        //Draw here
 
-        g.fillRect(0, 0, width, height);
+        if (State.getState() != null){
+            State.getState().render(g);
+        }
 
-
-        //Avsluta ritning
+        //End drawing
         bs.show();
         g.dispose();
     }
@@ -55,16 +81,43 @@ public class Game implements Runnable {
 
         init();
 
+        int fps = 60;
+        double timePerTick = 1000000000 / fps;
+        double delta = 0;
+        long now;
+        long lastTime = System.nanoTime();
+        long timer = 0;
+        int ticks = 0;
+
+
         while(running){
-            tick();
-            render();
+            now = System.nanoTime();
+            delta += (now - lastTime) / timePerTick;
+            timer += now - lastTime;
+            lastTime = now;
+
+            if(delta >= 1) {
+                tick();
+                render();
+                ticks++;
+                delta--;
+            }
+            if(timer >= 1000000000){
+                System.out.println("FPS: " + ticks);
+                ticks = 0;
+                timer = 0;
+            }
         }
 
         stop();
 
     }
 
-    //startar thread
+    public KeyManager getKeyManager(){
+        return keyManager;
+    }
+
+    //Starts thread
     public synchronized void start(){
         if(running)
             return;
@@ -73,7 +126,7 @@ public class Game implements Runnable {
         thread.start();
     }
 
-    //stoppar thread
+    //Ends thread
     public synchronized void stop(){
         if(!running)
             return;

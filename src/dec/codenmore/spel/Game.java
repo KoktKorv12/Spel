@@ -3,6 +3,7 @@ package dec.codenmore.spel;
 import dec.codenmore.spel.input.KeyManager;
 import dev.codenmore.spel.Display;
 import dev.codenmore.spel.gfx.Assets;
+import dev.codenmore.spel.gfx.GameCamera;
 import dev.codenmore.spel.states.GameState;
 import dev.codenmore.spel.states.State;
 import dev.codenmore.spel.states.MenuState;
@@ -14,7 +15,7 @@ import java.awt.image.BufferStrategy;
 public class Game implements Runnable {
 
     private Display display;
-    public int width, height;
+    private int width, height;
     public String title;
 
     private boolean running;
@@ -30,6 +31,9 @@ public class Game implements Runnable {
     //Input
     private KeyManager keyManager;
 
+    //Camera
+    private GameCamera gameCamera;
+
     //Sets height to "Game"
     public Game(String title, int width, int height){
         this.width = width;
@@ -43,6 +47,8 @@ public class Game implements Runnable {
         display = new Display(title ,width, height);
         display.getFrame().addKeyListener(keyManager);
         Assets.init();
+
+        gameCamera = new GameCamera(this, 0, 0);
 
         gameState = new GameState(this);
         menuState = new MenuState(this);
@@ -114,7 +120,20 @@ public class Game implements Runnable {
     }
 
     public KeyManager getKeyManager(){
+
         return keyManager;
+    }
+
+    public GameCamera getGameCamera(){
+        return gameCamera;
+    }
+
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
     }
 
     //Starts thread

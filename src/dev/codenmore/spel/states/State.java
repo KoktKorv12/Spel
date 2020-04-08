@@ -1,6 +1,7 @@
 package dev.codenmore.spel.states;
 
 import dec.codenmore.spel.Game;
+import dec.codenmore.spel.Handler;
 
 import java.awt.*;
 
@@ -17,10 +18,11 @@ public abstract class State {
     }
 
     //Class
-    protected Game game;
+    protected Handler handler;
 
-    public State (Game game){
-        this.game = game;
+    public State (Handler handler){
+
+        this.handler = handler;
     }
 
     public abstract void tick();

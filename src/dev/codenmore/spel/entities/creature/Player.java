@@ -1,11 +1,16 @@
 package dev.codenmore.spel.entities.creature;
 
 import dec.codenmore.spel.Handler;
+import dev.codenmore.spel.gfx.Animation;
 import dev.codenmore.spel.gfx.Assets;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Player extends Creature {
+
+    //Animations
+    private Animation animDown, animUp, animLeft, animRight;
 
 
     public Player(Handler handler, float x, float y) {
@@ -15,36 +20,62 @@ public class Player extends Creature {
         bounds.y = 16;
         bounds.width = 32;
         bounds.height = 48;
+
+        //Animations
+        animDown = new Animation(500, Assets.player_down);
+        animUp = new Animation(500, Assets.player_up);
+        animRight = new Animation(500, Assets.player_right);
+        animLeft = new Animation(500, Assets.player_left);
+
     }
+
 
     @Override
     public void tick() {
+        animDown.tick();
+        animUp.tick();
+        animRight.tick();
+        animLeft.tick();
         getInput();
         move();
         handler.getGameCamera().centerOnEntity(this);
-}
+    }
 
-    private void getInput(){
+    private void getInput() {
         xMove = 0;
         yMove = 0;
 
-        if(handler.getKeyManager().up)
+        if (handler.getKeyManager().up)
             yMove = -speed;
-        if(handler.getKeyManager().down)
+        if (handler.getKeyManager().down)
             yMove = speed;
-        if(handler.getKeyManager().left)
+        if (handler.getKeyManager().left)
             xMove = -speed;
-        if(handler.getKeyManager().right)
+        if (handler.getKeyManager().right)
             xMove = speed;
     }
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.player, (int ) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+        g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 
-   //     g.setColor(Color.red);
-   //     g.fillRect((int) (x + bounds.x - handler.getGameCamera().getxOffset()),
-   //             (int) (y + bounds.y - handler.getGameCamera().getyOffset()),
-   //             bounds.width, bounds.height);
+        //     g.setColor(Color.red);
+        //     g.fillRect((int) (x + bounds.x - handler.getGameCamera().getxOffset()),
+        //             (int) (y + bounds.y - handler.getGameCamera().getyOffset()),
+        //             bounds.width, bounds.height);
+    }
+
+    private BufferedImage getCurrentAnimationFrame(){
+        if (xMove < 0) {
+            return animLeft.getCurrentFrame();
+        } else if (xMove > 0) {
+            return animRight.getCurrentFrame();
+        } else if (yMove < 0) {
+            return animUp.getCurrentFrame();
+        } else if (yMove > 0) {
+            return animDown.getCurrentFrame();
+        }else {
+            return animDown.getCurrentFrame();
+        }
     }
 }

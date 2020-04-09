@@ -7,7 +7,7 @@ public class Launcher {
 
     //startar spelet "Launcher"
     public static void main(String[] args) {
-        Game game = new Game("Speltitel", 800,800);
+        Game game = new Game("Speltitel", 900,900);
         game.start();
 
     }

@@ -11,7 +11,6 @@ public class Handler {
 
 
     public Handler(Game game){
-
         this.game = game;
     }
 

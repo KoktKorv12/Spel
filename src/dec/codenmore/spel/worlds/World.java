@@ -3,6 +3,10 @@ package dec.codenmore.spel.worlds;
 import dec.codenmore.spel.Handler;
 import dec.codenmore.spel.tiles.Tile;
 import dec.codenmore.spel.utils.Utils;
+import dev.codenmore.spel.entities.Entity;
+import dev.codenmore.spel.entities.EntityManager;
+import dev.codenmore.spel.entities.creature.Player;
+import dev.codenmore.spel.entities.statics.Tree;
 
 import java.awt.*;
 
@@ -12,15 +16,23 @@ public class World {
     private int width, height;
     private int spawnX, spawnY;
     private int[][] tiles;
+    //Entities
+    private EntityManager entityManager;
 
     public World(Handler handler, String path){
         handler.setWorld(this);
         this.handler = handler;
+        entityManager = new EntityManager(handler, new Player(handler, 100, 100));
+        entityManager.addEntity(new Tree(handler, 100, 250));
+
         loadWorld(path);
+
+        entityManager.getPlayer().setX(spawnX);
+        entityManager.getPlayer().setX(spawnY);
     }
 
     public void tick(){
-
+        entityManager.tick();
     }
 
     public void render (Graphics g) {
@@ -36,6 +48,8 @@ public class World {
 
             }
         }
+        //Entities
+        entityManager.render(g);
     }
 
     public Tile getTile(int x , int y){

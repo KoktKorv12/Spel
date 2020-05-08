@@ -9,4 +9,5 @@ spritesheets kvalité, har också märkt att jag inte skrivit loggbok utan bara 
 men hoppas jag ändå kan försöka återberätta i form av commits.
 
 # 2020 - 05 - 08
-Idag har jag börjar läsa på om hur man lägger till ljudeffekter i spelet, tex när man går mm.
+Idag har jag börjar läsa på om hur man lägger till ljudeffekter i spelet, tex när man går mm. Nu när jag har en
+ungefär förståelse så kan jag fortsätta med att fixa ljudeffekter nästa lektion eller i helgen.

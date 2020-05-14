@@ -4,6 +4,7 @@ import dec.codenmore.spel.input.KeyManager;
 import dev.codenmore.spel.Display;
 import dev.codenmore.spel.gfx.Assets;
 import dev.codenmore.spel.gfx.GameCamera;
+import dev.codenmore.spel.sfx.Music;
 import dev.codenmore.spel.states.GameState;
 import dev.codenmore.spel.states.State;
 import dev.codenmore.spel.states.MenuState;
@@ -11,6 +12,8 @@ import dev.codenmore.spel.states.MenuState;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.File;
+
 
 public class Game implements Runnable {
 
@@ -147,6 +150,9 @@ public class Game implements Runnable {
         running = true;
         thread = new Thread(this);
         thread.start();
+        Music m = new Music();
+        File Music = new File("Background Music.wav");
+        m.PlaySound(Music);
     }
 
     //Ends thread

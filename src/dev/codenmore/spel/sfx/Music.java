@@ -1,25 +1,30 @@
 package dev.codenmore.spel.sfx;
 
-import com.sun.tools.javac.Main;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import java.io.File;
+import java.io.IOException;
 
 public class Music {
 
-  new Thread(new Runnable() {
-        public void run() {
+
+    public static void main(String[] args) {
+        Music m =  new Music();
+        m.play("BackgroundMusic.wav");
+    }
+
+
+    public void play(String filename) {
             try {
                 Clip clip = AudioSystem.getClip();
                 AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                        Main.class.getResourceAsStream("BackgroundMusic.wav"));
+                new File(filename));
                 clip.open(inputStream);
                 clip.start();
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
         }
-    }
+
 }

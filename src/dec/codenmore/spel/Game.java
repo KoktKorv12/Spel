@@ -151,8 +151,7 @@ public class Game implements Runnable {
         thread = new Thread(this);
         thread.start();
         Music m = new Music();
-        File Music = new File("Background Music.wav");
-        m.PlaySound(Music);
+        m.play("BackgroundMusic.wav");
     }
 
     //Ends thread

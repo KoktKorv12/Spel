@@ -23,5 +23,6 @@ Jag ska nästa lekionen eller på min fritid försöka fixa mitt det.
 Fixade bakgrundsmusiken, ska nu försöka ändra på ljudnivån av musiken samt försöka lägga till sound effects!
 Efter nu fixat ljudet märkte jag att musiken inte loopar, så försöker att fixa det. Fixade loopen med en rad kod :D
 
-# Länk till post mortem
+# Länk till post mortem samt arbetsplanering
 https://github.com/KoktKorv12/Spel/wiki/Spel---Post-Mortem
+https://github.com/KoktKorv12/Spel/wiki/Arbetsplanering
